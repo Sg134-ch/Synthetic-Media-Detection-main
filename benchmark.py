@@ -1,46 +1,49 @@
 import os
 import json
-import time
 import argparse
 from glob import glob
 from sklearn.metrics import accuracy_score, precision_score, recall_score, confusion_matrix
-import asyncio
 from PIL import Image
 
 # Import backend detectors
 import sys
+# Add the 'backend' directory to the Python path so we can import 'detectors'
 sys.path.append(os.path.join(os.path.dirname(__file__), 'backend'))
+
 from detectors.image_detector import detect_image
 from detectors.video_detector import detect_video
 from detectors.audio_detector import detect_audio
 
-async def evaluate_image(filepath):
+def evaluate_image(filepath):
     try:
         pil_image = Image.open(filepath).convert("RGB")
-        res = await detect_image(pil_image)
+        # detect_image is synchronous
+        res = detect_image(pil_image)
         # return 1 for Fake, 0 for Real
         return 1 if res['verdict'] == "DEEPFAKE" else 0
     except Exception as e:
         print(f"Error processing {filepath}: {e}")
         return -1
 
-async def evaluate_video(filepath):
+def evaluate_video(filepath):
     try:
-        res = await detect_video(filepath)
+        # detect_video is synchronous
+        res = detect_video(filepath)
         return 1 if res['verdict'] == "DEEPFAKE" else 0
     except Exception as e:
         print(f"Error processing {filepath}: {e}")
         return -1
 
-async def evaluate_audio(filepath):
+def evaluate_audio(filepath):
     try:
-        res = await detect_audio(filepath)
+        # detect_audio is synchronous
+        res = detect_audio(filepath)
         return 1 if res['verdict'] == "DEEPFAKE" else 0
     except Exception as e:
         print(f"Error processing {filepath}: {e}")
         return -1
 
-async def run_benchmark(dataset_dir):
+def run_benchmark(dataset_dir):
     results = {}
     for modality in ['image', 'video', 'audio']:
         print(f"\n--- Benchmarking {modality.upper()} ---")
@@ -57,11 +60,11 @@ async def run_benchmark(dataset_dir):
                 for filepath in glob(os.path.join(dir_path, ext)):
                     print(f"Evaluating {filepath}...")
                     if modality == 'image':
-                        pred = await evaluate_image(filepath)
+                        pred = evaluate_image(filepath)
                     elif modality == 'video':
-                        pred = await evaluate_video(filepath)
+                        pred = evaluate_video(filepath)
                     elif modality == 'audio':
-                        pred = await evaluate_audio(filepath)
+                        pred = evaluate_audio(filepath)
                     
                     if pred != -1:
                         y_true.append(class_val)
@@ -93,4 +96,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset', type=str, default='benchmark_data')
     args = parser.parse_args()
-    asyncio.run(run_benchmark(args.dataset))
+    
+    # Run synchronously
+    run_benchmark(args.dataset)
