@@ -86,7 +86,7 @@ def _load_model():
         model.to(device)
         model.eval()
         _audio_model = model
-        print(f"[AudioDetector] AASIST model (A) loaded on {device} ✓")
+        print(f"[AudioDetector] AASIST model (A) loaded on {device} [OK]")
     except Exception as e:
         print(f"[AudioDetector] Model A loading failed ({e}). Will try Model B or spectral fallback.")
         _audio_model = None
@@ -107,7 +107,7 @@ def _load_model_b():
         _feature_extractor_b = AutoFeatureExtractor.from_pretrained(HF_AUDIO_MODEL_B, token=token)
         _audio_model_b = AutoModelForAudioClassification.from_pretrained(HF_AUDIO_MODEL_B, token=token)
         _audio_model_b.eval()
-        print("[AudioDetector] MelodyMachine model (B) loaded ✓")
+        print("[AudioDetector] MelodyMachine model (B) loaded [OK]")
     except Exception as e:
         print(f"[AudioDetector] Model B loading failed ({e}). Continuing without Model B.")
         _audio_model_b = None
@@ -286,13 +286,13 @@ def _detect_with_model_b(model, extractor, y, sr):
             logits = outputs.logits
             probs = torch.nn.functional.softmax(logits, dim=-1)[0]
 
-        # Class 0 = Fake, Class 1 = Real
+        # Class 0 = Fake, Class 1 = Real (MelodyMachine/Deepfake-audio-detection-V2)
         prob_fake = probs[0].item() * 100
         prob_real = probs[1].item() * 100
 
         prob_dict = {
-            model.config.id2label.get(0, "real"): round(prob_real, 2),
-            model.config.id2label.get(1, "fake"): round(prob_fake, 2),
+            "fake": round(prob_fake, 2),
+            "real": round(prob_real, 2),
         }
 
         # Determine verdict
@@ -366,7 +366,7 @@ def _ensemble_results(result_a, result_b, y, sr):
             combined_fake = min(100.0, combined_fake + agreement_bonus)
         else:
             combined_real = min(100.0, combined_real + agreement_bonus)
-        agreement_note = "Models AGREE ✓ — averaged with confidence bonus"
+        agreement_note = "Models AGREE [OK] — averaged with confidence bonus"
     else:
         # Models disagree — use Confidence-Weighted Probability Calibration
         weight_a = abs(fake_a - 50.0)

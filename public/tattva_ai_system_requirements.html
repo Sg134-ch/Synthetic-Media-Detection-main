@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tattva.AI — System Requirements & Infrastructure Dossier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #111827;
+      --card-border: #1f2937;
+      --primary: #6366f1;
+      --primary-glow: rgba(99, 102, 241, 0.15);
+      --accent: #38bdf8;
+      --success: #10b981;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+      max-width: 800px;
+    }
+
+    .action-bar {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+      color: white;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.45);
+    }
+
+    .section {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f9fafb;
+      margin-bottom: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.88rem;
+    }
+
+    th {
+      background: #1e293b;
+      color: #94a3b8;
+      text-align: left;
+      padding: 12px 16px;
+      font-weight: 600;
+      border-bottom: 1px solid var(--card-border);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #1f2937;
+      color: #e5e7eb;
+    }
+
+    tr:nth-child(even) td {
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    .code-block {
+      background: #090d16;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 18px 20px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #38bdf8;
+      overflow-x: auto;
+      margin: 16px 0;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-badge">Infrastructure & Hardware Sizing Guide &bull; v3.0.0</div>
+    <h1>TATTVA.AI — System Requirements & Sizing Matrix</h1>
+    <p class="subtitle">Hardware tiers, GPU acceleration boundaries, software runtimes, memory profiles, and containerized deployment topology.</p>
+
+    <div class="action-bar">
+      <a href="/Tattva_AI_System_Requirements_Dossier.pdf" download class="btn btn-primary">
+        📥 Download Dedicated System Requirements PDF
+      </a>
+    </div>
+
+    <!-- Section 1 -->
+    <div class="section">
+      <h2>1. Hardware Deployment Tiers</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Tier</th>
+            <th>CPU & Memory</th>
+            <th>GPU / Acceleration</th>
+            <th>Storage</th>
+            <th>Target Workload</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Tier 1: Minimal (CPU / Dev)</b></td>
+            <td>Quad-Core x86_64 / ARM64<br/>8 GB DDR4 RAM</td>
+            <td>None (PyTorch CPU fallback)</td>
+            <td>10 GB free</td>
+            <td>Workstations, local testing, lightweight image/audio analysis.</td>
+          </tr>
+          <tr>
+            <td><b>Tier 2: Production (Single GPU)</b></td>
+            <td>6-8 Cores (i7 / Ryzen 7)<br/>16 - 32 GB RAM</td>
+            <td>NVIDIA GPU (CUDA 11.8/12+)<br/>&ge; 6 GB - 12 GB VRAM</td>
+            <td>25 GB free (NVMe)</td>
+            <td>Production servers, high-concurrency video frame analysis.</td>
+          </tr>
+          <tr>
+            <td><b>Tier 3: Enterprise (Cluster)</b></td>
+            <td>16+ Cores (Xeon / EPYC)<br/>64 - 128 GB ECC RAM</td>
+            <td>Multi-GPU (NVIDIA A100 / L40S)<br/>&ge; 24 - 80 GB VRAM</td>
+            <td>100 GB+ free</td>
+            <td>High-volume enterprise automated batch processing & live video streams.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="section">
+      <h2>2. Memory & VRAM Footprint Breakdown</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Model / Subsystem</th>
+            <th>Disk Size</th>
+            <th>RAM (CPU Mode)</th>
+            <th>VRAM (GPU Mode)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>CLIP ViT-Large-Patch14</b></td>
+            <td>~1.71 GB</td>
+            <td>~1.85 GB</td>
+            <td>~1.75 GB VRAM</td>
+          </tr>
+          <tr>
+            <td><b>Swin AI Image Detector</b></td>
+            <td>~110 MB</td>
+            <td>~180 MB</td>
+            <td>~150 MB VRAM</td>
+          </tr>
+          <tr>
+            <td><b>MelodyMachine Wav2Vec2</b></td>
+            <td>~360 MB</td>
+            <td>~450 MB</td>
+            <td>~390 MB VRAM</td>
+          </tr>
+          <tr>
+            <td><b>AASIST Model & PyTorch Context</b></td>
+            <td>~762 MB</td>
+            <td>~895 MB</td>
+            <td>~680 MB VRAM</td>
+          </tr>
+          <tr>
+            <td><b>Next.js 16 Web Server</b></td>
+            <td>~350 MB</td>
+            <td>~280 MB</td>
+            <td>N/A</td>
+          </tr>
+          <tr>
+            <td><b>Total Active Baseline</b></td>
+            <td><b>~3.29 GB</b></td>
+            <td><b>~3.65 - 4.50 GB</b></td>
+            <td><b>~3.00 - 3.80 GB</b></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="section">
+      <h2>3. Port & Network Matrix</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Port</th>
+            <th>Protocol</th>
+            <th>Service</th>
+            <th>Scope</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>3000</b></td>
+            <td>HTTP / WS</td>
+            <td>Next.js Frontend</td>
+            <td>Public / Ingress</td>
+            <td>Web dashboard, interactive dropzone, client-side PDF export.</td>
+          </tr>
+          <tr>
+            <td><b>8000</b></td>
+            <td>HTTP / REST</td>
+            <td>FastAPI Backend</td>
+            <td>Internal / Gateway</td>
+            <td>AI neural inference, ELA heatmaps, forensic APIs.</td>
+          </tr>
+          <tr>
+            <td><b>127.0.0.1</b></td>
+            <td>TCP Loopback</td>
+            <td>IPC Bridge</td>
+            <td>Localhost</td>
+            <td>Next.js Server Actions proxying to Python backend.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

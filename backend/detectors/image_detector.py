@@ -112,7 +112,7 @@ def _get_face_cascade():
         if os.path.exists(yunet_path):
             try:
                 _face_cascade = cv2.FaceDetectorYN.create(yunet_path, "", (320, 320))
-                print("[FaceDetect] Loaded OpenCV YuNet ✓")
+                print("[FaceDetect] Loaded OpenCV YuNet [OK]")
                 return _face_cascade
             except Exception:
                 pass
@@ -206,7 +206,7 @@ def preload_models():
             _model_a = CLIPModel.from_pretrained(MODEL_A, token=token)
             _model_a.to(DEVICE)
             _model_a.eval()
-            print("[ImageDetector] Model A (CLIP zero-shot) loaded ✓")
+            print("[ImageDetector] Model A (CLIP zero-shot) loaded [OK]")
         except Exception as e:
             _load_err_a = str(e)
             print(f"[ImageDetector] Model A FAILED: {e}")
@@ -219,7 +219,7 @@ def preload_models():
             _model_b = AutoModelForImageClassification.from_pretrained(MODEL_B, token=token)
             _model_b.to(DEVICE)
             _model_b.eval()
-            print(f"[ImageDetector] Model B loaded ✓  Labels: {_model_b.config.id2label}")
+            print(f"[ImageDetector] Model B loaded [OK]  Labels: {_model_b.config.id2label}")
         except Exception as e:
             _load_err_b = str(e)
             print(f"[ImageDetector] Model B FAILED: {e}")

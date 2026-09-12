@@ -117,6 +117,9 @@ def detect_video(video_path: str, progress_callback=None) -> dict:
     fake_count = sum(1 for r in frame_results if r["verdict"] == "DEEPFAKE")
     suspicious_count = sum(1 for r in frame_results if r["verdict"] == "SUSPICIOUS")
     total_analyzed = len(frame_results)
+    fake_ratio = (fake_count + 0.5 * suspicious_count) / total_analyzed if total_analyzed > 0 else 0.0
+    combined_score = 0.5 * avg_fake_score + 0.3 * median_fake_score + 0.2 * max_fake_score
+    temporal = _analyze_temporal_consistency(frame_results)
 
     # Verdict with calibrated thresholds (matching image detector)
     if fake_ratio >= 0.4 or combined_score >= 50 or (max_fake_score >= 95 and fake_ratio > 0.1):

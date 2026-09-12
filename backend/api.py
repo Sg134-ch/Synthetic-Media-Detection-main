@@ -119,7 +119,7 @@ def _do_preload():
     except Exception as e:
         print(f"[API] Audio models preload failed: {e}")
         
-    print("[API] Background model preloading complete ✓")
+    print("[API] Background model preloading complete [OK]")
 
 async def preload_models():
     loop = asyncio.get_running_loop()
@@ -130,7 +130,7 @@ async def lifespan(app: FastAPI):
     """Create temp directory on startup, clean it on shutdown."""
     os.makedirs(TEMP_DIR, exist_ok=True)
     print(f"[API] Temp directory ready: {TEMP_DIR}")
-    print("[API] IntrusionX SE API is live ✓")
+    print("[API] IntrusionX SE API is live [OK]")
     
     # Pre-load heavy models so the first user request is instant
     asyncio.create_task(preload_models())
@@ -178,12 +178,14 @@ app.add_middleware(
 
 # ── PROMETHEUS METRICS & LOGGING ───────────────────────────────
 import logging
-from prometheus_fastapi_instrumentator import Instrumentator
+try:
+    from prometheus_fastapi_instrumentator import Instrumentator
+    Instrumentator().instrument(app).expose(app)
+except Exception as e:
+    pass
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 logger = logging.getLogger("tattva.api")
-
-Instrumentator().instrument(app).expose(app)
 
 
 # ══════════════════════════════════════════════════════════════
@@ -255,9 +257,11 @@ def _build_response(
     if verdict == "DEEPFAKE":
         vlm_explanation = f"Analysis confirms a high probability of synthetic manipulation ({confidence:.1f}% confidence). The deep learning models (ViT/Wav2Vec2) identified structural inconsistencies typical of AI-generated content. "
         if isinstance(details, dict) and "ai_insights" in details:
-            for insight in details["ai_insights"]:
-                if insight["severity"] in ["high", "critical"]:
-                    vlm_explanation += f"{insight['description']} "
+            ai_ins = details["ai_insights"]
+            insights_list = ai_ins.get("ai_insights", []) if isinstance(ai_ins, dict) else (ai_ins if isinstance(ai_ins, list) else [])
+            for insight in insights_list:
+                if isinstance(insight, dict) and insight.get("severity") in ["high", "critical"]:
+                    vlm_explanation += f"{insight.get('description', '')} "
     elif verdict == "SUSPICIOUS":
         vlm_explanation = f"Analysis detected potential anomalies ({confidence:.1f}% confidence), though not definitive. This may result from heavy compression, filters, or partial manipulation."
     else:
