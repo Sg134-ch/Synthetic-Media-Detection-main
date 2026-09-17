@@ -61,7 +61,8 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
               href="#upload"
-              className="px-8 py-3.5 bg-primary text-background rounded-full text-sm font-medium hover:bg-white transition-colors"
+            
+            className="... bg-primary text-background ... hover:opacity-80 transition-colors"
             >
               <DecryptedText text="Start Detection" speed={60} maxIterations={12} animateOn="hover" />
             </a>

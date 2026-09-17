@@ -101,7 +101,8 @@ export default function VideoInsights({ insights }: VideoInsightsProps) {
         </div>
         
         {insights.vlm_explanation && (
-          <div className="px-4 py-3 bg-[#0a0f16]">
+          
+            <div className="px-4 py-3 bg-background">
             <div className="flex items-center gap-2 mb-2">
               <Brain className="w-3.5 h-3.5 text-primary opacity-70" />
               <span className="text-[10px] text-primary uppercase tracking-[0.1em] font-medium">VLM Forensic Explainer (Phase 2)</span>
