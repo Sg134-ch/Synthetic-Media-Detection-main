@@ -131,7 +131,7 @@ const MapMarkerTooltip = ({ data }: { data: FraudData & { x: number; y: number }
         marginTop: "-12px", // offset above the dot
       }}
     >
-      <div className="bg-background/90 backdrop-blur-md border border-border text-white px-5 py-3 rounded-lg shadow-[0_0_15px_rgba(255,0,0,0.3)] min-w-[160px] text-center">
+      <div className="bg-background/90 backdrop-blur-md border border-border text-primary ...">
         <div className="flex items-center justify-center gap-2 mb-1">
           <span className="text-xl leading-none">{emoji}</span>
           <span className="font-semibold text-lg text-primary">{data.country}</span>
